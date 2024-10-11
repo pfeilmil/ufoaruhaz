@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #333333; /* Világoskék háttérszín */
+    color:  #003366; /* Sötétebb szöveg */
+}
+
+header {
+    background-color: #ADD8E6; /* Zöld háttér */
+    color: black;
+    padding: 1rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s; /* Animáció a hover hatásra */
+}
+
+nav ul li a:hover {
+    color: #020100; /* Arany szín hover esetén */
+}
+
+input[type="text"], input[type="number"] {
+    padding: 0.5rem;
+    margin-top: 1rem;
+    width: 80%;
+    border: 1px solid #ccc; /* Határ szín */
+    border-radius: 4px; /* Lekerekített sarkok */
+}
+
+.hero {
+    background-color: #333333; /* Arany háttér */
+    color: #D3D3D3;
+    padding: 2rem;
+    text-align: center;
+}
+
+.hero h2 {
+    margin-bottom: 1rem;
+    font-size: 2.5rem; /* Nagyobb szöveg */
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn {
+    background-color: #ADD8E6; /* Zöld háttér */
+    color: black;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s; /* Animáció */
+}
+
+.btn:hover {
+    background-color: #388E3C; /* Sötétebb zöld hover esetén */
+}
+
+.page {
+    padding: 2rem;
+    background-color: #fff; /* Fehér háttér a szekciókhoz */
+    text-align: center;
+    min-height: 300px;
+    border-radius: 8px; /* Lekerekített sarkok */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Árnyék a szekciók körül */
+    margin-bottom: 1rem; /* Térköz a szekciók között */
+}
+
+.product-item {
+    background-color: #f9f9f9; /* Világos háttér a termékekhez */
+    padding: 1rem;
+    margin: 1rem;
+    width: 300px;
+    border: 1px solid #ddd; /* Határ szín */
+    border-radius: 10px; /* Lekerekített sarkok */
+    display: inline-block; /* Inline blokként jeleníti meg a termékeket */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Árnyék a termékek körül */
+}
+
+.product-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Lekerekített sarkok a képeknél */
+    margin-bottom: 1rem;
+}
+
+footer {
+    background-color: #ADD8E6; /* Zöld háttér a láblécnek */
+    color: black;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}

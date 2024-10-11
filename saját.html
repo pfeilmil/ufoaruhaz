@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ufó Áruház</title>
+    <link rel="stylesheet" href="üzlet.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Ufó Áruház</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('home')">Kezdőlap</a></li>
+                <li><a href="#" onclick="showPage('about')">Rólunk</a></li>
+                <li><a href="#" onclick="showPage('products')">Termékeink</a></li>
+                <li><a href="#" onclick="showPage('contact')">Kapcsolat</a></li>
+                <li><a href="#" onclick="showPage('cart')">Kosár (<span id="cart-count">0</span>)</a></li>
+                <li><a href="#" onclick="showPage('login')">Bejelentkezés</a></li>
+            </ul>
+        </nav>
+        <input type="text" id="search" placeholder="Keresés termékek között..." onkeyup="searchProducts()">
+    </header>
+
+    <!-- Kezdőlap -->
+    <section id="home" class="page">
+        <div class="hero">
+            <h2>Stílusos és kényelmes bútorok otthonod számára</h2>
+            <p>Fedezd fel széles termékkínálatunkat!</p>
+            <a href="#" class="btn" onclick="showPage('products')">Nézd meg termékeinket</a>
+        </div>
+    </section>
+
+    <!-- Rólunk Szekció -->
+    <section id="about" class="page" style="display: none;">
+        <h2>Rólunk</h2>
+        <p>Bútorüzletünk évek óta a minőségi és stílusos bútorok otthona. Célunk, hogy kényelmes és elegáns környezetet teremtsünk vásárlóink számára, ahol mindenki megtalálhatja a számára tökéletes bútort.</p>
+    </section>
+
+    <!-- Termékek Szekció -->
+    <section id="products" class="page" style="display: none;">
+        <h2>Termékeink</h2>
+        <div class="products" id="product-list">
+            <div class="product-item">
+                <img src="sofa.jpg" alt="Kanapé">
+                <h3>Modern Kanapé</h3>
+                <p>Ár: 120.000 Ft</p>
+                <input type="number" id="sofa-quantity" min="1" value="1">
+                <button onclick="addToCart('Modern Kanapé', 120000, document.getElementById('sofa-quantity').value)">Kosárba</button>
+            </div>
+            <div class="product-item">
+                <img src="table.jpg" alt="Asztal">
+                <h3>Fa Étkezőasztal</h3>
+                <p>Ár: 80.000 Ft</p>
+                <input type="number" id="table-quantity" min="1" value="1">
+                <button onclick="addToCart('Fa Étkezőasztal', 80000, document.getElementById('table-quantity').value)">Kosárba</button>
+            </div>
+            <div class="product-item">
+                <img src="chair.jpg" alt="Szék">
+                <h3>Stílusos Szék</h3>
+                <p>Ár: 25.000 Ft</p>
+                <input type="number" id="chair-quantity" min="1" value="1">
+                <button onclick="addToCart('Stílusos Szék', 25000, document.getElementById('chair-quantity').value)">Kosárba</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kapcsolat Szekció -->
+    <section id="contact" class="page" style="display: none;">
+        <h2>Kapcsolat</h2>
+        <p>Ha bármilyen kérdésed van, vagy segítségre van szükséged, lépj kapcsolatba velünk:</p>
+        <p>Email: info@ufoaruhaz.hu | Telefon: +36 30 123 4567</p>
+    </section>
+
+    <!-- Kosár Szekció -->
+    <section id="cart" class="page" style="display: none;">
+        <h2>Kosár</h2>
+        <div id="cart-items">
+            <p>A kosár üres.</p>
+        </div>
+        <p>Összesen: <span id="total-price">0 Ft</span></p>
+        <button onclick="checkout()">Fizetés</button>
+    </section>
+
+    <!-- Bejelentkezés -->
+    <section id="login" class="page" style="display: none;">
+        <h2>Bejelentkezés</h2>
+        <form>
+            <label for="username">Felhasználónév:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Jelszó:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Bejelentkezés</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Bútorbolt | Minden jog fenntartva.</p>
+    </footer>
+
+    <script>
+        let cart = [];
+        let totalPrice = 0;
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.style.display = 'none');
+            document.getElementById(pageId).style.display = 'block';
+        }
+
+        function addToCart(productName, price, quantity) {
+            const existingProductIndex = cart.findIndex(item => item.name === productName);
+            if (existingProductIndex > -1) {
+                cart[existingProductIndex].quantity += parseInt(quantity);
+                cart[existingProductIndex].price += price * quantity;
+            } else {
+                cart.push({ name: productName, price: price * quantity, quantity: parseInt(quantity) });
+            }
+            totalPrice += price * quantity;
+            document.getElementById('cart-count').innerText = cart.length;
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = ''; // Kosár kiürítése és frissítése
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>A kosár üres.</p>';
+            } else {
+                cart.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.innerText = `${item.name} (${item.quantity} db) - ${item.price} Ft`;
+                    cartItems.appendChild(itemDiv);
+                });
+            }
+            document.getElementById('total-price').innerText = totalPrice + ' Ft';
+        }
+
+        function searchProducts() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const products = document.querySelectorAll('.product-item');
+            products.forEach(product => {
+                const productName = product.querySelector('h3').innerText.toLowerCase();
+                if (productName.includes(searchTerm)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        function checkout() {
+            if (cart.length > 0) {
+                alert(`Köszönjük a vásárlást! A fizetendő összeg: ${totalPrice} Ft.`);
+                // Töröljük a kosár tartalmát
+                cart = [];
+                totalPrice = 0;
+                document.getElementById('cart-count').innerText = 0;
+                updateCartDisplay();
+            } else {
+                alert('A kosár üres!');
+            }
+        }
+    </script>
+</body>
+</html>
